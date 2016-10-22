@@ -1,21 +1,20 @@
 import numpy as np
 import argparse 
 import cv2
-i = 1
-j = 1
-s = 0
+__author__ = "Isaac Addis"
+
+parser = argparse.ArgumentParser(description='Lowkey do vision')
+parser.add_argument('-l','--l', type = list, help = 'Lower bound')
+parser.add_argument('-u','--u', type = list, help = 'Upper bound')
+args = parser.parse_args()
+#Video stream (webcam)
 cap = cv2.VideoCapture(0)
 while(True):
     # Capture frame-by-frame
     ret, frame = cap.read()
-    frame = cv2.GaussianBlur(frame, (i,j), s)
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-    boundaries = [
-    	([17, 15, 100], [50, 56, 200]),
-    	([86, 31, 4], [220, 88, 50]),
-    	([25, 146, 190], [62, 174, 250]),
-    	([103, 86, 65], [145, 133, 128])
-    ]
+    lowerBound = args.l
+    upperBound = args.u
     for(lower, upper) in boundaries:
     	lower = np.array(lower, dtype = "uint8")
     	upper = np.array(upper, dtype = "uint8")
